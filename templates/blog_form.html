@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Blog Post</title>
+    <style>
+        /* Optional CSS for message styling */
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border: 1px solid #c3e6cb;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Add a New Blog Post</h2>
+
+    <!-- Display success message if available -->
+    {% if messages %}
+        <div>
+            {% for message in messages %}
+                <div class="success-message">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'add_post' %}">
+        {% csrf_token %}
+        <label for="title">Title</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="body">Content</label><br>
+        <textarea id="body" name="body" rows="10" required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

@@ -39,6 +39,28 @@ def register(request):
     
     else:
         return render(request, 'register.html')
+
+#This will show the template of the entering blog details
+def blog_form(request):
+    return render(request, 'blog_form.html') 
+    
+#This will enter the data in the data base
+def add_post(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')  # Get the title from the form
+        body = request.POST.get('body')    # Get the body content from the form
+
+        # Create and save the new post
+        new_post = Posts(title=title, body=body)
+        new_post.save()
+
+        messages.success(request, 'The Blog details uploaded successfully...')
+
+        return render(request, 'blog_form.html')  # Redirect to a same page after submission (e.g., homepage)
+    
+    return render(request, 'blog_form.html')  # Render the form template
+
+
     
 def login(request):
     if request.method == 'POST':
