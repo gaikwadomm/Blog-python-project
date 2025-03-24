@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial;
+  padding: 20px;
+  background: #f1f1f1;
+}
+
+.header {
+  padding: 2px;
+  font-size: 40px;
+  text-align: center;
+  background: white;
+}
+
+.leftcolumn {   
+  float: left;
+  width: 100%;
+}
+
+.card {
+   background-color: white;
+   padding: 20px;
+   margin-top: 20px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.btn-getstarted {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            float: right; /* Aligns the button to the right */
+            margin-right: 20px; /* Adds space from the right edge */
+        }
+
+.btn-getstarted:hover {
+      background-color: #0056b3;
+  }
+
+@media screen and (max-width: 800px) {
+  .leftcolumn, .rightcolumn {   
+    width: 100%;
+    padding: 0;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h2>Om's Blog</h2>
+</div>
+
+<a class="btn-getstarted" href="/logout">Logout</a>
+
+<div class="row">
+  <div class="leftcolumn">
+    {% for pos in posts reversed %}
+    <div class="card">
+      <a style="text-decoration: none; color: black;" href="/posts/{{pos.id}}">
+        <h2>{{pos.title}}</h2>
+        <h5>{{pos.created_at}}</h5>
+        <p>{{pos.body|truncatewords:20}}</p>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+</body>
+</html>

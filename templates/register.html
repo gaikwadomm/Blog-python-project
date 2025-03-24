@@ -1,0 +1,48 @@
+{% load static %}
+
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Login Form Design | CodeLab</title>
+      <link rel="stylesheet" href="{% static 'assets/css/signup.css' %}">
+   </head>
+   <style>
+    h5{
+        color: red;
+    }
+   </style>
+   <body>
+    {% for message in messages %}
+    <h5>{{message}}</h5>
+    {% endfor %}
+      <div class="wrapper">
+         <div class="title">
+            Sign Up Form
+         </div>
+         <form action="register" method="POST">
+            {% csrf_token %}
+            <div class="field">
+                <input type="text" name="username" required>
+                <label>User Name</label>
+            </div>
+            <div class="field">
+               <input type="email" name="email" required>
+               <label>Email Address</label>
+            </div>
+            <div class="field">
+               <input type="password" name="code" required>
+               <label>Password</label>
+            </div>
+            <div class="field">
+                <input type="password" name="code2" required>
+                <label>Repeat Password</label>
+            </div>
+            <div class="field">
+               <input type="submit" value="Sign Up">
+            </div>
+         </form>
+      </div>
+   </body>
+</html>
