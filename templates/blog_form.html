@@ -5,41 +5,212 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Blog Post</title>
     <style>
-        /* Optional CSS for message styling */
+        /* Global Reset */
+        body, h1, h2, p, form, input, textarea, button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* General Body Styling */
+        /* body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f9fb;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        } */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-image: url('https://img.freepik.com/free-vector/organic-flat-blog-post-illustration-with-people_23-2148955260.jpg?t=st=1742893604~exp=1742897204~hmac=05a767f07b7ef33ba0a167507c4f13b2face6a956cde70ecea59c51d96d68637&w=996');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+            position: relative;
+            padding: 40px;
+        }
+
+        /* Background Image */
+        .background-image {
+            background-image: url('https://via.placeholder.com/1500x500');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            border-radius: 15px;
+            z-index: -1;
+        }
+ 
+        h2 {
+            font-size: 32px;
+            font-weight: bold;
+            text-align: center;
+            padding-top: 80px;
+             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); 
+        } 
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: #f8f8f8;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #007BFF;
+            background-color: #fff;
+            outline: none;
+        }
+
+        .form-group textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .form-group button {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Success and Error Message Styles */
+        .success-message, .error-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
         .success-message {
             background-color: #d4edda;
             color: #155724;
-            padding: 10px;
             border: 1px solid #c3e6cb;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            font-size: 14px;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 28px;
+                padding-top: 50px;
+            }
+
+            .background-image {
+                height: 250px;
+            }
+        }
+
+        /* Animation for smooth loading */
+        .container {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
     </style>
 </head>
 <body>
-    <h2>Add a New Blog Post</h2>
 
-    <!-- Display success message if available -->
-    {% if messages %}
-        <div>
-            {% for message in messages %}
-                <div class="success-message">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+    <div class="container">
+        <div class="background-image"></div>
+        <h2>Add a New Blog Post</h2>
 
-    <form method="POST" action="{% url 'add_post' %}">
-        {% csrf_token %}
-        <label for="title">Title</label><br>
-        <input type="text" id="title" name="title" required><br><br>
+        <!-- Display success or error message -->
+        {% if messages %}
+            <div>
+                {% for message in messages %}
+                    <div class="success-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
 
-        <label for="body">Content</label><br>
-        <textarea id="body" name="body" rows="10" required></textarea><br><br>
+        <form method="POST" action="{% url 'add_post' %}">
+            {% csrf_token %}
 
-        <button type="submit">Submit</button>
-    </form>
+            <div class="form-group">
+                <label for="title">Post Title</label>
+                <input type="text" id="title" name="title" placeholder="Enter the title of your post" required>
+            </div>
+
+            <div class="form-group">
+                <label for="body">Post Content</label>
+                <textarea id="body" name="body" placeholder="Write your content here..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <button type="submit">Publish Post</button>
+            </div>
+        </form>
+    </div>
+
 </body>
 </html>
