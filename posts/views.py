@@ -102,3 +102,9 @@ def delete(request):
     else:
         # Render the delete form for GET request
         return render(request, 'delete.html')
+
+
+# Redirects to the login page if in case the user uses browser's back navigation and signs in without refreshing
+def csrf_failure(request, reason=''):
+    messages.info(request, "Something went wrong while logging you in, Please try again!")
+    return redirect('login')
